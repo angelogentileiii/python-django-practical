@@ -17,7 +17,7 @@ monthly_challenges = {
     "september": "Oh wow! Already September!",
     "october": "Oh wow! Already October!",
     "november": "Oh wow! Already November!",
-    "december": "Oh wow! Already December!",
+    "december": None,
 }
 
 
@@ -33,22 +33,29 @@ monthly_challenges = {
 
 def index(request):
     months = list(monthly_challenges.keys())
-    links = []
-    for month in months:
-        links.append(
-            f"<a href={reverse("month-challenge", args=[month])}>{month.capitalize()}</a>"
-        )
-    print(links)
-    response_data = "</br>".join(links)
-    return HttpResponse(response_data)
+
+    return render(request, "challenges/index.html", {"months": months})
+
+    # for month in months:
+    #     links.append(
+    #         f"<a href={reverse("month-challenge", args=[month])}>{month.capitalize()}</a>"
+    #     )
+    # print(links)
+    # response_data = "</br>".join(links)
+    # return HttpResponse(response_data)
 
 
 # The second argument must match the concrete value that is passed to the url path within '<>'
 def monthly_challenge(request, month):
     try:
         challenge_text = monthly_challenges[month.lower()]
-        response_data = f"<h1>{challenge_text}</h1>"
-        return HttpResponse(response_data)
+        return render(
+            request,
+            "challenges/challenge.html",
+            {"month": month, "text": challenge_text},
+        )
+        # response_data = render_to_string("challenges/challenge.html")
+        # return HttpResponse(response_data)
     except:
         return HttpResponseNotFound("<h1>This month is not supported</h1>")
 
