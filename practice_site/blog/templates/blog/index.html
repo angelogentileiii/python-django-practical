@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files%}
+    <link rel="stylesheet" href="{% static "blog/index.css" %}"/>
+{% endblock %}
+
+{% block title %}
+    Blog Site
+{% endblock %}
+
+{% block body%}
+    <header id="main-navigation">
+        <h1>
+            <a href="">Angelo's Blog</a>
+        </h1>
+        <nav>
+            <a href="">All Posts</a>
+        </nav>
+    </header>
+
+    <section id="welcome">
+        <header>
+            <img src="" alt="Angelo - The Author of this Blog" />
+            <h2>ANGELO'S BLOG</h2>
+        </header>
+        <p>
+            BLOG TEXT TEXT TEXT
+        </p>
+    </section>
+
+    <section id="latest-posts">
+        <h2>LATEST POSTS</h2>
+        <ul>
+            <li>
+                <article class="post">
+                    <a href="">
+                        <img src="" alt="post-details" />
+                        <div class="post__content">
+                            <h3>Post Title</h3>
+                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Similique aut et consequatur asperiores praesentium laborum at odio doloribus sint ipsum, facilis mollitia ratione molestiae hic autem exercitationem, sapiente harum maiores.</p>
+                        </div>
+                    </a>
+                </article>
+            </li>
+        </ul>
+    </section>
+
+    <section id="about">
+        <h2>What I Do</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus sint ratione placeat nisi ab iusto quod ipsam. Animi quasi, possimus numquam ut adipisci asperiores ducimus. Veniam temporibus nostrum autem pariatur!</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus delectus quidem harum cum, nobis libero, voluptate dolores neque ea quae labore, placeat exercitationem? Nulla molestias iste quia voluptate vitae repudiandae!e</p>
+    </section>
+{% endblock %}
