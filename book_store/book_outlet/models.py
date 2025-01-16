@@ -26,16 +26,18 @@ class Book(models.Model):
     # db_index --> This item will be used frequently for searching the database
     #   - The database more efficiently stores the data for this reason --> Speeds up search performance (But decreases perfomance on adding to the database)
     #   - Should only be used for values that are used for querying frequently
-    slug = models.SlugField(default="", null=False, db_index=True)
+    # blank=True --> Also has implications in the admin site, means we do not need it to have the input filled in
+    slug = models.SlugField(default="", blank=True, null=False, db_index=True)
 
     def __str__(self):
         return f"{self.title} ({self.rating})"
 
     # Overwrite the built in save method with some custom logic
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        # Use super to ensure that the original save method is called and anything passed to the outer function is passed to the original save function
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.slug = slugify(self.title)
+
+    #     Use super to ensure that the original save method is called and anything passed to the outer function is passed to the original save function
+    #     super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse("book_detail", args=[self.slug])
