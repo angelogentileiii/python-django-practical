@@ -8,9 +8,35 @@ from django.utils.text import slugify
 
 # Django will create a 'books' table in the database --> Lowercase and Pluralize classname
 #   - Also will handle the primary key/autoincrement id
+
+
+class Country(models.Model):
+    name = models.CharField(max_length=80)
+    code = models.CharField(max_length=2)
+
+    class Meta:
+        verbose_name_plural = "Countries"
+
+    def __str__(self):
+        return f"{self.name} ({self.code})"
+
+
+class Address(models.Model):
+    street = models.CharField(max_length=80)
+    post_code = models.CharField(max_length=5)
+    city = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name_plural = "Address Entries"
+
+    def __str__(self):
+        return f"{self.street}, {self.city} {self.post_code}"
+
+
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    address = models.OneToOneField(Address, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -32,6 +58,7 @@ class Book(models.Model):
     # null=True allows NULL value in the column of the database --> blank=True allows value to be empty (different han having a NULL value)
     #   - blank=True is more used for values that are not received --> As in from a form that leaves an area empty
     #   - An empty string for CharField or TextFields should usually be an empty string --> Not the NULL value
+    # This is a One-To-Many relationship using the ForeignKey model field and the Author class as the key
     author = models.ForeignKey(
         Author, on_delete=models.CASCADE, null=True, related_name="books"
     )
@@ -43,6 +70,8 @@ class Book(models.Model):
     #   - Should only be used for values that are used for querying frequently
     # blank=True --> Also has implications in the admin site, means we do not need it to have the input filled in
     slug = models.SlugField(default="", blank=True, null=False, db_index=True)
+
+    published_countries = models.ManyToManyField(Country, related_name="books")
 
     def __str__(self):
         return f"{self.title} ({self.rating})"

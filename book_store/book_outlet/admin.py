@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Book, Author
+from .models import Book, Author, Address, Country
 
 
 # Register your models here.
@@ -19,8 +19,8 @@ class BookAdmin(admin.ModelAdmin):
 class BookInline(admin.TabularInline):
     model = Book
     extra = 0
-    fields = ("title",)
-    readonly_fields = ("title",)
+    fields = ("title", "published_countries")
+    readonly_fields = ("title", "published_countries")
 
 
 class AuthorAdmin(admin.ModelAdmin):
@@ -28,8 +28,49 @@ class AuthorAdmin(admin.ModelAdmin):
         "first_name",
         "last_name",
     )
+
     inlines = [BookInline]
+
+    list_display = ("__str__", "get_books")
+
+    def get_books(self, obj):
+        books = obj.books.all()  # Access the related books via the related name
+        return ", ".join([f"{book.title}" for book in books])
+
+    get_books.short_description = "Books"
+
+
+class AddressAdmin(admin.ModelAdmin):
+    list_filter = ("city",)
+    list_display = (
+        "street",
+        "city",
+        "post_code",
+        "get_author",
+    )
+
+    def get_author(self, obj):
+        if obj.author:
+            return f"{obj.author.first_name} {obj.author.last_name}"
+        else:
+            return "No Author"
+
+    # Optional: Set the column name in the admin list view
+    get_author.short_description = "Author"
+
+
+class CountryAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "get_books")
+
+    def get_books(self, obj):
+        books = obj.books.all()  # Access the related books via the related name
+        return ", ".join([f"{book.title} by {book.author}" for book in books])
+
+    # Optional: Set the column name in the admin list view
+    get_books.short_description = "Books"
 
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(Author, AuthorAdmin)
+admin.site.register(Address, AddressAdmin)
+admin.site.register(Country, CountryAdmin)
