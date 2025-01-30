@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files%}
+    <link rel="stylesheet" href="{% static "blog/index.css" %}"/>
+    <link rel="stylesheet" href="{% static "blog/post.css" %}" />
+{% endblock %}
+
+{% block title %}
+    Blog Site
+{% endblock %}
+
+{% block body%}
+    <section id="welcome">
+        <header>
+            <img src="{% static "blog/images/angelo.png" %}" alt="Angelo - The Author of this Blog" />
+            <h2>ANGELO'S BLOG</h2>
+        </header>
+        <p>
+            Hello! Welcome to my test blog site where I am learning how to utilize Django and it's core functionalities!
+        </p>
+    </section>
+
+    <section id="latest-posts">
+        <h2>LATEST POSTS</h2>
+        <ul>
+            {% for post in posts %}
+                {% include "blog/includes/post.html" %}
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section id="about">
+        <h2>What I Do</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus sint ratione placeat nisi ab iusto quod ipsam. Animi quasi, possimus numquam ut adipisci asperiores ducimus. Veniam temporibus nostrum autem pariatur!</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus delectus quidem harum cum, nobis libero, voluptate dolores neque ea quae labore, placeat exercitationem? Nulla molestias iste quia voluptate vitae repudiandae!e</p>
+    </section>
+{% endblock %}

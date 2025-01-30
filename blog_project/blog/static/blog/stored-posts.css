@@ -1,0 +1,44 @@
+#main-navigation {
+    background-color: #390281;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+#stored_posts {
+    margin: 8rem auto 3rem auto;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0px 2px 8px #00000040;
+    background-color: white;
+    width: 90%;
+    max-width: 30rem;
+}
+
+#stored_posts ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#stored_posts li {
+    margin: 1rem 0;
+    padding: 1rem;
+}
+
+#stored_posts a {
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    width: 100%;
+    text-decoration: none;
+    border: 1px solid lightgray;
+    border-radius: 6px;
+    background-color: #390281;
+    color: white;
+    font-weight: bold;
+}
+
+#stored_posts a:hover,
+#stored_posts a:active {
+    background-color: #4f09aa;
+    border-color: #4f09aa;
+}
