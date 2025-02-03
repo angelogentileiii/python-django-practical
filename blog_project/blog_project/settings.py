@@ -39,6 +39,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'blog',
+    'storages',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -129,8 +130,7 @@ USE_TZ = True
 
 # Directory for collecting all static files --> python3 manage.py collectstatic
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
@@ -141,3 +141,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/files/"
+
+AWS_STORAGE_BUCKET_NAME = "django-blog-project-ajgiii"
+AWS_S3_REGION_NAME = "us-east-1"
+AWS_ACCESS_KEY_ID = getenv("AWS_AK_ID")
+AWS_SECRET_ACCESS_KEY = getenv("AWS_SA_KEY")
+
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+
+STATICFILES_FOLDER = "static"
+MEDIAFILES_FOLDER = "uploads"
+
+STORAGES = {
+   "default": {
+        "BACKEND" : "custom_storages.MediaFileStorage",
+    },
+
+    "staticfiles":  {
+        "BACKEND" : "custom_storages.StaticFileStorage",
+    },
+}
